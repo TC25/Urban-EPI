@@ -12,7 +12,7 @@ for (i in 1:length(temp)){
   #Create a variable for the UHI column in the csv
   #Merged =merge(Input_f,Buffer,by="nbhd_code")
   Merged =merge(Input_f,Prec,by="nbhd_code")
-  #Create a 5 column dataframe with 4 columns of the original csv and the newly created vector
+  #Create a new dataframe
   FIN <- data.frame(Merged[,1],Merged[,2],Merged[,3],Merged[,4],Merged[,5],Merged[,6],Merged[,7],Merged[,8],Merged[,9],Merged[,10],Merged[,11],Merged[,12])
   #Set the names of each column
   colnames(FIN) <- c("nbhd_code","system:index", "UHI", "UHINIGHT",  "UHIEQ","Buffer_UHI","NDVI","NDBI","Albedo","Impervious_surface","DEM","Prec")

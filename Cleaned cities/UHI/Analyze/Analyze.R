@@ -9,6 +9,7 @@ library(ggpubr)
 setwd("E:/Disk backup/Pen drive/Yale important/Other/Data driven yale/Cleaned cities/UHI/Analyze")
 #List all the csv files in directory
 temp = list.files(pattern="*.csv")
+#Initiatize variables
 plot_list = list()
 R_sq1=array()
 R_sq2=array()
@@ -24,8 +25,7 @@ for (i in 1:length(temp)){
   #Assign the csv file to a variable
   Input_f <- assign(temp[i], read.csv(temp[i]))
   S[i] = substr(temp[i],1,nchar(temp[i])-4)
-  # Change the point colors and shapes
-  # Change the line type and color
+##run linear model for each pair
   igfit1 <- lm(NDVI~UHI,data=Input_f)
   R_sq1[i]<-summary(igfit1)$r.squared
   p_val1[i]<-summary(igfit1)$coefficients[,4] 
@@ -35,6 +35,8 @@ for (i in 1:length(temp)){
   igfit3 <- lm(Albedo~UHI,data=Input_f)
   R_sq3[i]<-summary(igfit3)$r.squared
   p_val3[i]<-summary(igfit3)$coefficients[,4] 
+  # Change the point colors and shapes
+  # Change the line type and color
   p=ggplot(Input_f, aes(x=UHI, y=NDVI)) + 
     geom_point(shape=18, color="blue")+
     geom_smooth(method=lm, se=FALSE, linetype="dashed",
@@ -46,12 +48,14 @@ for (i in 1:length(temp)){
                 color="darkred", fill="blue")+ggtitle(S[i])
   #plot_list[[i]] = p
   plot_list[[i]] = q
+  #Estimate r value
   r_val1[i]<-cor(Input_f$NDVI, Input_f$UHI,  method = "pearson", use = "complete.obs")
   r_val2[i]<-cor(Input_f$NDBI, Input_f$UHI,  method = "pearson", use = "complete.obs")
   r_val3[i]<-cor(Input_f$Albedo, Input_f$UHI,  method = "pearson", use = "complete.obs")
  
 }
 #+ coord_fixed()
+#Arrange plots on grid
 do.call(grid.arrange,plot_list)
 
 #Create data frame

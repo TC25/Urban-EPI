@@ -28,4 +28,5 @@ for (i in 1:length(temp)){
   plot_list[[i]] = q
   
 }
+#Arrange plots in grid
 do.call(grid.arrange,plot_list)
